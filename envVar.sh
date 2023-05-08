@@ -12,9 +12,9 @@
 
 export CORE_PEER_TLS_ENABLED=true
 export ORDERER_CA=${PWD}/artifacts/channel/crypto-config/ordererOrganizations/supplychain.com/tlsca/tlsca.supplychain.com-cert.pem
-export PEER0_ORG1_CA=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org1.supplier.com/tlsca/tlsca.org1.supplier.com-cert.pem
-export PEER0_ORG2_CA=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org2.manufacturer.com/tlsca/tlsca.org2.manufacturer.com-cert.pem
-export PEER0_ORG3_CA=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org3.distributor.com/tlsca/tlsca.org3.distributor.com-cert.pem
+export PEER0_ORG1_CA=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org1.supplychain.com/tlsca/tlsca.org1.supplychain.com-cert.pem
+export PEER0_ORG2_CA=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org2.supplychain.com/tlsca/tlsca.org2.supplychain.com-cert.pem
+export PEER0_ORG3_CA=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org3.supplychain.com/tlsca/tlsca.org3.supplychain.com-cert.pem
 export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/artifacts/channel/crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/tls/server.crt
 export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/artifacts/channel/crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/tls/server.key
 
@@ -30,18 +30,18 @@ setGlobals() {
   if [ $USING_ORG -eq 1 ]; then
     export CORE_PEER_LOCALMSPID="Org1MSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG1_CA
-    export CORE_PEER_MSPCONFIGPATH=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org1.supplier.com/users/Admin@org1.supplier.com/msp
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org1.supplychain.com/users/Admin@org1.supplychain.com/msp
     export CORE_PEER_ADDRESS=localhost:7051
   elif [ $USING_ORG -eq 2 ]; then
     export CORE_PEER_LOCALMSPID="Org2MSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG2_CA
-    export CORE_PEER_MSPCONFIGPATH=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org2.manufacturer.com/users/Admin@org2.manufacturer.com/msp
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org2.supplychain.com/users/Admin@org2.supplychain.com/msp
     export CORE_PEER_ADDRESS=localhost:9051
 
   elif [ $USING_ORG -eq 3 ]; then
     export CORE_PEER_LOCALMSPID="Org3MSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG3_CA
-    export CORE_PEER_MSPCONFIGPATH=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org3.distributor.com/users/Admin@org3.distributor.com/msp
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/artifacts/channel/crypto-config/peerOrganizations/org3.supplychain.com/users/Admin@org3.supplychain.com/msp
     export CORE_PEER_ADDRESS=localhost:11051
   else
     errorln "ORG Unknown"
@@ -63,11 +63,11 @@ setGlobalsCLI() {
     USING_ORG="${OVERRIDE_ORG}"
   fi
   if [ $USING_ORG -eq 1 ]; then
-    export CORE_PEER_ADDRESS=peer0.org1.supplier.com:7051
+    export CORE_PEER_ADDRESS=peer0.org1.supplychain.com:7051
   elif [ $USING_ORG -eq 2 ]; then
-    export CORE_PEER_ADDRESS=peer0.org2.manufacturer.com:9051
+    export CORE_PEER_ADDRESS=peer0.org2.supplychain.com:9051
   elif [ $USING_ORG -eq 3 ]; then
-    export CORE_PEER_ADDRESS=peer0.org3.distributor.com:11051
+    export CORE_PEER_ADDRESS=peer0.org3.supplychain.com:11051
   else
     errorln "ORG Unknown"
   fi

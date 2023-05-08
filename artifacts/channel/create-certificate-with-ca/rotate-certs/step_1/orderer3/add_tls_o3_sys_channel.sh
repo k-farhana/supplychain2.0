@@ -1,17 +1,17 @@
 export CORE_PEER_TLS_ENABLED=true
-# export ORDERER_CA=${PWD}/../../../../new-certs/ordererOrganizations/supplychain.com/orderers/orderer.supplier.com/msp/tlscacerts/tlsca.supplier.com-cert.pem
-export ORDERER_CA=${PWD}/../../../../crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplier.com/msp/tlscacerts/tlsca.supplier.com-cert.pem
+# export ORDERER_CA=${PWD}/../../../../new-certs/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/msp/tlscacerts/tlsca.supplychain.com-cert.pem
+export ORDERER_CA=${PWD}/../../../../crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/msp/tlscacerts/tlsca.supplychain.com-cert.pem
 export FABRIC_CFG_PATH=${PWD}/../../../../../channel/config/
 
-export ORDERER_3_TLS_FILE=${PWD}/../../../../new-certs/ordererOrganizations/supplychain.com/orderers/orderer3.supplier.com/tls/server.crt
+export ORDERER_3_TLS_FILE=${PWD}/../../../../new-certs/ordererOrganizations/supplychain.com/orderers/orderer3.supplychain.com/tls/server.crt
 
 export CHANNEL_NAME=mychannel
 export SYSTEM_CHANNEL_NAME=sys-channel
 
 setGlobalsForOrderer() {
     export CORE_PEER_LOCALMSPID="OrdererMSP"
-    # export CORE_PEER_MSPCONFIGPATH=${PWD}/../../../../crypto-config/ordererOrganizations/supplychain.com/users/Admin@supplier.com/msp
-     export CORE_PEER_MSPCONFIGPATH=${PWD}/../../../../new-certs/ordererOrganizations/supplychain.com/users/Admin@supplier.com/msp
+    # export CORE_PEER_MSPCONFIGPATH=${PWD}/../../../../crypto-config/ordererOrganizations/supplychain.com/users/Admin@supplychain.com/msp
+     export CORE_PEER_MSPCONFIGPATH=${PWD}/../../../../new-certs/ordererOrganizations/supplychain.com/users/Admin@supplychain.com/msp
 
 }
 

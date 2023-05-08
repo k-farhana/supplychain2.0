@@ -32,7 +32,7 @@ PeerOrgs:
   # Org1
   # ---------------------------------------------------------------------------
   - Name: Org1
-    Domain: org1.supplier.com
+    Domain: org1.supplychain.com
     EnableNodeOUs: true
 
     Template:
@@ -46,7 +46,7 @@ PeerOrgs:
       Count: 1
 
   - Name: Org2
-    Domain: org2.manufacturer.com
+    Domain: org2.supplychain.com
     EnableNodeOUs: true
 
     Template:
@@ -60,7 +60,7 @@ PeerOrgs:
       Count: 1
 
   - Name: Org3
-    Domain: org3.distributor.com
+    Domain: org3.supplychain.com
     EnableNodeOUs: true
 
     Template:

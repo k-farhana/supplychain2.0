@@ -26,6 +26,6 @@ cd ..
 
 
 # supplychain
-# supplier
-# manufacturer
-# distributor
+# supplychain
+# supplychain
+# supplychain
