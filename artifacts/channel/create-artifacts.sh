@@ -12,22 +12,26 @@ rm -rf ../../channel-artifacts/*
 SYS_CHANNEL="sys-channel"
 
 # channel name defaults to "mychannel"
-CHANNEL_NAME="mychannel"
+CHANNELA_NAME="channela"
+CHANNELB_NAME="channelb"
 
-echo $CHANNEL_NAME
+echo $CHANNEL_NAMEA
+echo $CHANNEL_NAMEB
 
 # Generate System Genesis block
 configtxgen -profile OrdererGenesis -configPath . -channelID $SYS_CHANNEL  -outputBlock ./genesis.block
 
 
 # Generate channel configuration block
-configtxgen -profile BasicChannel -configPath . -outputCreateChannelTx ./$CHANNEL_NAME.tx -channelID $CHANNEL_NAME
+configtxgen -profile Channela -configPath . -outputCreateChannelTx ./$CHANNELA_NAME.tx -channelID $CHANNELA_NAME
+configtxgen -profile Channelb -configPath . -outputCreateChannelTx ./$CHANNELB_NAME.tx -channelID $CHANNELB_NAME
 
 echo "#######    Generating anchor peer update for Org1MSP  ##########"
-configtxgen -profile BasicChannel -configPath . -outputAnchorPeersUpdate ./Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP
+configtxgen -profile Channela -configPath . -outputAnchorPeersUpdate ./Org1MSPanchors.tx -channelID $CHANNELA_NAME -asOrg Org1MSP
 
 echo "#######    Generating anchor peer update for Org2MSP  ##########"
-configtxgen -profile BasicChannel -configPath . -outputAnchorPeersUpdate ./Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP
+configtxgen -profile Channela -configPath . -outputAnchorPeersUpdate ./Org2MSPanchorsA.tx -channelID $CHANNELA_NAME -asOrg Org2MSP
+configtxgen -profile Channelb -configPath . -outputAnchorPeersUpdate ./Org2MSPanchorsB.tx -channelID $CHANNELB_NAME -asOrg Org2MSP
 
 echo "#######    Generating anchor peer update for Org3MSP  ##########"
-configtxgen -profile BasicChannel -configPath . -outputAnchorPeersUpdate ./Org3MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org3MSP
+configtxgen -profile Channelb -configPath . -outputAnchorPeersUpdate ./Org3MSPanchors.tx -channelID $CHANNELB_NAME -asOrg Org3MSP

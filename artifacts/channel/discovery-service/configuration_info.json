@@ -101,15 +101,15 @@
             "OrdererMSP": {
                     "endpoint": [
                             {
-                                    "host": "orderer.example.com",
+                                    "host": "orderer.supplychain.com",
                                     "port": 7050
                             },
                             {
-                                    "host": "orderer2.example.com",
+                                    "host": "orderer2.supplychain.com",
                                     "port": 8050
                             },
                             {
-                                    "host": "orderer3.example.com",
+                                    "host": "orderer3.supplychain.com",
                                     "port": 9050
                             }
                     ]

@@ -2,7 +2,7 @@ Organizations:
     - &OrdererOrg
         Name: OrdererOrg
         ID: OrdererMSP
-        MSPDir: crypto-config/ordererOrganizations/example.com/msp
+        MSPDir: crypto-config/ordererOrganizations/supplychain.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -17,7 +17,7 @@ Organizations:
     - &Org1
         Name: Org1MSP
         ID: Org1MSP
-        MSPDir: crypto-config/peerOrganizations/org1.example.com/msp
+        MSPDir: crypto-config/peerOrganizations/org1.supplier.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -36,13 +36,13 @@ Organizations:
             #     Rule: "OR('Org1MSP.admin', 'Org1MSP.client')"
 
         AnchorPeers:
-            - Host: peer0.org1.example.com
+            - Host: peer0.org1.supplier.com
               Port: 7051
 
     - &Org2
         Name: Org2MSP
         ID: Org2MSP
-        MSPDir: crypto-config/peerOrganizations/org2.example.com/msp
+        MSPDir: crypto-config/peerOrganizations/org2.manufacturer.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -61,13 +61,13 @@ Organizations:
             #     Rule: "OR('Org1MSP.admin')"
 
         AnchorPeers:
-            - Host: peer0.org2.example.com
+            - Host: peer0.org2.manufacturer.com
               Port: 9051
     
     - &Org3
         Name: Org3MSP
         ID: Org3MSP
-        MSPDir: crypto-config/peerOrganizations/org3.example.com/msp
+        MSPDir: crypto-config/peerOrganizations/org3.distributor.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -86,7 +86,7 @@ Organizations:
             #     Rule: "OR('Org1MSP.admin')"
 
         AnchorPeers:
-            - Host: peer0.org3.example.com
+            - Host: peer0.org3.distributor.com
               Port: 9051
 
 Capabilities:
@@ -210,13 +210,13 @@ Orderer: &OrdererDefaults
 
     EtcdRaft:
         Consenters:
-        - Host: orderer.example.com
+        - Host: orderer.supplychain.com
           Port: 7050
-          ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
-          ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+          ClientTLSCert: crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/tls/server.crt
 
     Addresses:
-        - orderer.example.com:7050
+        - orderer.supplychain.com:7050
 
     BatchTimeout: 2s
 
@@ -258,13 +258,22 @@ Channel: &ChannelDefaults
 
 
 Profiles:
-    BasicChannel:
+    Channela:
         Consortium: SampleConsortium
         <<: *ChannelDefaults
         Application:
             <<: *ApplicationDefaults
             Organizations:
                 - *Org1
+                - *Org2
+            Capabilities:
+                <<: *ApplicationCapabilities
+    Channelb:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
                 - *Org2
                 - *Org3
             Capabilities:
@@ -278,22 +287,22 @@ Profiles:
             OrdererType: etcdraft
             EtcdRaft:
                 Consenters:
-                - Host: orderer.example.com
+                - Host: orderer.supplychain.com
                   Port: 7050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
-                - Host: orderer2.example.com
+                  ClientTLSCert: crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/tls/server.crt
+                - Host: orderer2.supplychain.com
                   Port: 8050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
-                - Host: orderer3.example.com
+                  ClientTLSCert: crypto-config/ordererOrganizations/supplychain.com/orderers/orderer2.supplychain.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/supplychain.com/orderers/orderer2.supplychain.com/tls/server.crt
+                - Host: orderer3.supplychain.com
                   Port: 9050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
+                  ClientTLSCert: crypto-config/ordererOrganizations/supplychain.com/orderers/orderer3.supplychain.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/supplychain.com/orderers/orderer3.supplychain.com/tls/server.crt
             Addresses:
-                - orderer.example.com:7050
-                - orderer2.example.com:8050
-                - orderer3.example.com:9050
+                - orderer.supplychain.com:7050
+                - orderer2.supplychain.com:8050
+                - orderer3.supplychain.com:9050
 
             Organizations:
             - *OrdererOrg

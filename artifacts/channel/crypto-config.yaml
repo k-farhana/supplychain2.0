@@ -4,7 +4,7 @@ OrdererOrgs:
   # Orderer
   # ---------------------------------------------------------------------------
   - Name: Orderer
-    Domain: example.com
+    Domain: supplychain.com
     EnableNodeOUs: true
 
     # ---------------------------------------------------------------------------
@@ -32,7 +32,7 @@ PeerOrgs:
   # Org1
   # ---------------------------------------------------------------------------
   - Name: Org1
-    Domain: org1.example.com
+    Domain: org1.supplier.com
     EnableNodeOUs: true
 
     Template:
@@ -46,7 +46,21 @@ PeerOrgs:
       Count: 1
 
   - Name: Org2
-    Domain: org2.example.com
+    Domain: org2.manufacturer.com
+    EnableNodeOUs: true
+
+    Template:
+      Count: 2
+      # Start: 5
+      # Hostname: {{.Prefix}}{{.Index}} # default
+      SANS:
+        - "localhost"
+
+    Users:
+      Count: 1
+
+  - Name: Org3
+    Domain: org3.distributor.com
     EnableNodeOUs: true
 
     Template:

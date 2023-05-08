@@ -4,9 +4,10 @@ networks:
   test:
 
 services:
-  orderer.example.com:
-    container_name: orderer.example.com
-    image: hyperledger/fabric-orderer:2.1
+  orderer.supplychain.com:
+    platform: linux/x86_64
+    container_name: orderer.supplychain.com
+    image: hyperledger/fabric-orderer:2.2
     dns_search: .
     environment:
       - ORDERER_GENERAL_LOGLEVEL=info
@@ -39,13 +40,14 @@ services:
       - test
     volumes:
       - ./channel/genesis.block:/var/hyperledger/orderer/genesis.block
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls:/var/hyperledger/orderer/tls
+      - ./channel/crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/msp:/var/hyperledger/orderer/msp
+      - ./channel/crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/tls:/var/hyperledger/orderer/tls
       # - /var/pavan/orderer:/var/hyperledger/production
 
-  orderer2.example.com:
-    container_name: orderer2.example.com
-    image: hyperledger/fabric-orderer:2.1
+  orderer2.supplychain.com:
+    platform: linux/x86_64
+    container_name: orderer2.supplychain.com
+    image: hyperledger/fabric-orderer:2.2
     dns_search: .
     environment:
       - ORDERER_GENERAL_LOGLEVEL=info
@@ -78,13 +80,14 @@ services:
       - test
     volumes:
       - ./channel/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/msp:/var/hyperledger/orderer/msp
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls:/var/hyperledger/orderer/tls
+      - ./channel/crypto-config/ordererOrganizations/supplychain.com/orderers/orderer2.supplychain.com/msp:/var/hyperledger/orderer/msp
+      - ./channel/crypto-config/ordererOrganizations/supplychain.com/orderers/orderer2.supplychain.com/tls:/var/hyperledger/orderer/tls
       # - /var/pavan/orderer2:/var/hyperledger/production
 
-  orderer3.example.com:
-    container_name: orderer3.example.com
-    image: hyperledger/fabric-orderer:2.1
+  orderer3.supplychain.com:
+    platform: linux/x86_64
+    container_name: orderer3.supplychain.com
+    image: hyperledger/fabric-orderer:2.2
     dns_search: .
     environment:
       - ORDERER_GENERAL_LOGLEVEL=info
@@ -117,11 +120,12 @@ services:
       - test
     volumes:
       - ./channel/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/msp:/var/hyperledger/orderer/msp
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls:/var/hyperledger/orderer/tls
+      - ./channel/crypto-config/ordererOrganizations/supplychain.com/orderers/orderer3.supplychain.com/msp:/var/hyperledger/orderer/msp
+      - ./channel/crypto-config/ordererOrganizations/supplychain.com/orderers/orderer3.supplychain.com/tls:/var/hyperledger/orderer/tls
       # - /var/pavan/orderer3:/var/hyperledger/production
 
   couchdb0:
+    platform: linux/x86_64
     container_name: couchdb0
     image: couchdb:3.1.1
     environment:
@@ -133,6 +137,7 @@ services:
       - test
 
   couchdb1:
+    platform: linux/x86_64
     container_name: couchdb1
     image: couchdb:3.1.1
     environment:
@@ -144,6 +149,7 @@ services:
       - test
 
   couchdb2:
+    platform: linux/x86_64
     container_name: couchdb2
     image: couchdb:3.1.1
     environment:
@@ -154,8 +160,9 @@ services:
     networks:
       - test
 
-  peer0.org1.example.com:
-    container_name: peer0.org1.example.com
+  peer0.org1.supplier.com:
+    platform: linux/x86_64
+    container_name: peer0.org1.supplier.com
     extends:
       file: base.yaml
       service: peer-base
@@ -166,15 +173,15 @@ services:
 
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
 
-      - CORE_PEER_ID=peer0.org1.example.com
-      - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+      - CORE_PEER_ID=peer0.org1.supplier.com
+      - CORE_PEER_ADDRESS=peer0.org1.supplier.com:7051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.supplier.com:7052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       # Peer used to bootstrap gossip within organisation
-      # - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:8051
+      # - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.supplier.com:8051
       # Exposed for discovery Service
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.supplier.com:7051
 
       # - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:9440
 
@@ -193,8 +200,8 @@ services:
     ports:
       - 7051:7051
     volumes:
-      - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/crypto/peer/msp
-      - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
+      - ./channel/crypto-config/peerOrganizations/org1.supplier.com/peers/peer0.org1.supplier.com/msp:/etc/hyperledger/crypto/peer/msp
+      - ./channel/crypto-config/peerOrganizations/org1.supplier.com/peers/peer0.org1.supplier.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       # - /var/pavan/peer0-org1:/var/hyperledger/production
       # - ./channel/:/etc/hyperledger/channel/
@@ -202,8 +209,9 @@ services:
       - test
 
 
-  peer0.org2.example.com:
-    container_name: peer0.org2.example.com
+  peer0.org2.manufacturer.com:
+    platform: linux/x86_64
+    container_name: peer0.org2.manufacturer.com
     extends:
       file: base.yaml
       service: peer-base
@@ -214,14 +222,14 @@ services:
 
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
 
-      - CORE_PEER_ID=peer0.org2.example.com
-      - CORE_PEER_ADDRESS=peer0.org2.example.com:9051
+      - CORE_PEER_ID=peer0.org2.manufacturer.com
+      - CORE_PEER_ADDRESS=peer0.org2.manufacturer.com:9051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.org2.example.com:9052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.org2.manufacturer.com:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
       # Exposed for discovery Service
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.example.com:9051
-      # - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org2.example.com:10051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.manufacturer.com:9051
+      # - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org2.manufacturer.com:10051
 
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
@@ -237,16 +245,17 @@ services:
     ports:
       - 9051:9051
     volumes:
-      - ./channel/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/crypto/peer/msp
-      - ./channel/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/crypto/peer/tls
+      - ./channel/crypto-config/peerOrganizations/org2.manufacturer.com/peers/peer0.org2.manufacturer.com/msp:/etc/hyperledger/crypto/peer/msp
+      - ./channel/crypto-config/peerOrganizations/org2.manufacturer.com/peers/peer0.org2.manufacturer.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       # - /var/pavan/peer0-org2:/var/hyperledger/production
       # - ./channel/:/etc/hyperledger/channel/
     networks:
       - test
 
-  peer0.org3.example.com:
-    container_name: peer0.org3.example.com
+  peer0.org3.distributor.com:
+    platform: linux/x86_64
+    container_name: peer0.org3.distributor.com
     extends:
       file: base.yaml
       service: peer-base
@@ -257,16 +266,16 @@ services:
 
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
 
-      - CORE_PEER_ID=peer0.org3.example.com
-      - CORE_PEER_ADDRESS=peer0.org3.example.com:11051
+      - CORE_PEER_ID=peer0.org3.distributor.com
+      - CORE_PEER_ADDRESS=peer0.org3.distributor.com:11051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
-      # - CORE_PEER_CHAINCODEADDRESS=peer0.org3.example.com:7052
+      # - CORE_PEER_CHAINCODEADDRESS=peer0.org3.distributor.com:7052
       # - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       # Peer used to bootstrap gossip within organisation
-      # - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org3.example.com:12051
+      # - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org3.distributor.com:12051
 
       # Exposed for discovery Service
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org3.example.com:11051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org3.distributor.com:11051
 
       # - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:9440
 
@@ -285,8 +294,8 @@ services:
     ports:
       - 11051:11051
     volumes:
-      - ./channel/crypto-config/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/msp:/etc/hyperledger/crypto/peer/msp
-      - ./channel/crypto-config/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls:/etc/hyperledger/crypto/peer/tls
+      - ./channel/crypto-config/peerOrganizations/org3.distributor.com/peers/peer0.org3.distributor.com/msp:/etc/hyperledger/crypto/peer/msp
+      - ./channel/crypto-config/peerOrganizations/org3.distributor.com/peers/peer0.org3.distributor.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       # - /var/pavan/peer0-org3:/var/hyperledger/production
     networks:
