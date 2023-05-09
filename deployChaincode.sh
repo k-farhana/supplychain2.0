@@ -7,7 +7,7 @@ export FABRIC_CFG_PATH=${PWD}/artifacts/channel/config/
 
 export CHANNELA_NAME=channela
 export CHANNELB_NAME=channelb
- failed to invoke backing implementation of 'InstallChaincode': could not build chaincode: docker build failed: docker image inspection failed: Get "http://unix.sock/images/dev-peer0.org1.supplychain.com-fabcar_1.0-896f48ce709110c60e64298da87e3dd1c7ea4eb032c864a0d59a129f70b65eb1-efe8375aa759edc8bf5c2c7681d95f7d1af161cd5cd309fd7ea838b6f9cae15b/json":
+
 setGlobalsForOrderer() {
     export CORE_PEER_LOCALMSPID="OrdererMSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/artifacts/channel/crypto-config/ordererOrganizations/supplychain.com/orderers/orderer.supplychain.com/msp/tlscacerts/tlsca.supplychain.com-cert.pem
